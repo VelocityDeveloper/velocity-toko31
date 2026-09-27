@@ -23,6 +23,8 @@
 $inc = get_stylesheet_directory() . '/inc';
 $includes = [
     'enqueue.php',
+	'customizer.php',
+	'vd-store.php',
     'function-child.php',
     'shortcodes.php',
 ];

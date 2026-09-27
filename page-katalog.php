@@ -9,7 +9,7 @@
 get_header();
 $container        = get_theme_mod('justg_container_type', 'container');
 $search_query     = new WP_Query(array(
-    'post_type'         => 'product',
+    'post_type'         => 'store_product',
     'post_status'       => 'publish',
     'order'             => 'asc',
     'orderby'           => 'title',
@@ -20,10 +20,6 @@ $search_query     = new WP_Query(array(
 <div class="wrapper" id="page-wrapper">
 
     <div class="<?php echo esc_attr($container); ?> p-0" id="content">
-
-        <div class="btn-print mb-3">
-            <?php echo do_shortcode('[print targetid="main"]'); ?>
-        </div>
 
         <div class="row mx-0">
 
@@ -40,32 +36,32 @@ $search_query     = new WP_Query(array(
                     <?php if ($search_query->have_posts()) : ?>
                         <div class="row mx-0">
                             <?php while ($search_query->have_posts()) : $search_query->the_post();
-                                $title = wp_trim_words(get_the_title(), '5');
+                                $title = wp_trim_words(get_the_title(), 5);
                             ?>
                                 <article <?php post_class('col-md-4 col-6 p-2 mb-3'); ?> id="post-<?php the_ID(); ?>">
                                     <div class="card h-100 shadow card-product border-0">
                                         <div class="bg-colortheme p-2">
-                                            <?php echo do_shortcode("[thumbnail width='300' height='300' crop='false' upscale='true']"); ?>
+                                            <a class="d-block" href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>"><?php echo do_shortcode('[wp_store_thumbnail width="300" height="300" crop="true"]'); ?></a>
                                         </div>
 
                                         <div class="p-3">
                                             <div class="my-2 text-center">
-                                                <h6 class="colortheme fw-bold"><?php echo do_shortcode("[harga]"); ?></h6>
+                                                <h6 class="colortheme fw-bold"><?php echo do_shortcode('[wp_store_price]'); ?></h6>
                                             </div>
                                             <div class="my-2 text-center">
-                                                <h6><a class="text-dark" href="<?php echo get_the_permalink(); ?>"><?php echo $title; ?></a></h6>
+                                                <h6><a class="text-dark" href="<?php the_permalink(); ?>"><?php echo esc_html($title); ?></a></h6>
                                             </div>
                                             <div class="row">
                                                 <div class="col-9 p-1 text-start"><a href="<?php the_permalink(); ?>" class="btn btn-sm p-1 bg-colortheme text-white fw-bold w-100">Detail</a></div>
                                                 <div class="col-3 p-1 text-end">
-                                                    <span class="cart-arsip w-100 btn btn-sm p-1 bg-dark"><?php echo do_shortcode("[beli]"); ?></span>
+                                                    <span class="cart-arsip w-100 btn btn-sm p-1 bg-dark"><?php echo do_shortcode('[wp_store_add_to_cart text="" class="velocity-toko31-beli"]'); ?></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </article>
 
-                            <?php endwhile; ?>
+                            <?php endwhile; wp_reset_postdata(); ?>
                         </div>
                     <?php else : ?>
                         <div class="container text-center">

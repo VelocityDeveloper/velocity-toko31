@@ -1,22 +1,25 @@
 <div class="header-container container p-3">
     <div class="row text-center align-items-center py-0 m-0">
         <div class="col-md-4 p-0 text-md-start">
-            <?php $sitelogo = velocitytheme_option('custom_logo'); ?>
+            <?php $sitelogo = get_theme_mod('custom_logo'); ?>
             <div class="position-relative">
                 <?php if ($sitelogo) : ?>
-                    <a href="<?php get_home_url(); ?>">
-                        <img src="<?php echo wp_get_attachment_image_url($sitelogo, 'full'); ?>" alt="Site Logo" loading="lazy">
+                    <a href="<?php echo esc_url(home_url('/')); ?>">
+                        <img class="img-fluid" src="<?php echo esc_url(wp_get_attachment_image_url($sitelogo, 'full')); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" loading="lazy">
                     </a>
                 <?php endif;  ?>
             </div>
         </div>
         <div class="col-md-4 p-0">
-            <h5 class="colortheme fw-bold">Hotline : <?php echo get_theme_mod('hotline'); ?></h5>
+            <?php $hotline = velocity_toko31_hotline(); ?>
+            <?php if ($hotline !== '') : ?>
+                <h5 class="colortheme fw-bold">Hotline : <?php echo esc_html($hotline); ?></h5>
+            <?php endif; ?>
         </div>
         <div class="col-md-4 profile-icons p-0">
             <div class="d-flex float-md-end justify-content-center">
-                <div class="p-2"><?php echo do_shortcode('[cart]'); ?></div>
-                <div class="p-2"><?php echo do_shortcode('[profile]'); ?></div>
+                <div class="p-2"><?php echo do_shortcode('[wp_store_cart size="22"]'); ?></div>
+                <div class="p-2"><?php echo velocity_toko31_profil(); ?></div>
             </div>
         </div>
     </div>
